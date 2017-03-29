@@ -1,0 +1,56 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "transactions"
+(
+    id INTEGER PRIMARY KEY NOT NULL,
+    user_id INTEGER NOT NULL,
+    symbol TEXT NOT NULL,
+    price REAL NOT NULL,
+    quantity INTEGER NOT NULL,
+    transaction_date TEXT NOT NULL
+);
+INSERT INTO "transactions" VALUES(5,3,'AAPL',135.72,100,'Sun Feb 19 17:13:10 2017');
+INSERT INTO "transactions" VALUES(6,11,'AAPL',135.72,50,'Sun Feb 19 17:15:23 2017');
+INSERT INTO "transactions" VALUES(7,11,'AAPL',135.72,1,'Sun Feb 19 17:16:54 2017');
+INSERT INTO "transactions" VALUES(8,3,'AAPL',136.46,12,'Tue Feb 21 09:32:13 2017');
+INSERT INTO "transactions" VALUES(9,3,'MU',23.665,1000,'Tue Feb 21 09:48:52 2017');
+INSERT INTO "transactions" VALUES(10,3,'MU',23.74,100,'Tue Feb 21 13:07:38 2017');
+INSERT INTO "transactions" VALUES(20,3,'BABA',104.3,50,'Wed Feb 22 14:04:18 2017');
+INSERT INTO "transactions" VALUES(21,3,'CAC',42.32,946,'Wed Feb 22 14:07:33 2017');
+INSERT INTO "transactions" VALUES(22,3,'AAPL',137.03,-15,'Wed Feb 22 14:08:41 2017');
+INSERT INTO "transactions" VALUES(23,3,'DIA',207.41,112,'Fri Feb 24 10:22:15 2017');
+INSERT INTO "transactions" VALUES(24,3,'DIS',109.66,125,'Fri Feb 24 10:22:36 2017');
+INSERT INTO "transactions" VALUES(25,3,'EEM',38.52,814,'Fri Feb 24 10:22:44 2017');
+INSERT INTO "transactions" VALUES(26,3,'EFA',60.4,75,'Fri Feb 24 10:22:58 2017');
+INSERT INTO "transactions" VALUES(27,3,'GXC',80.72,125,'Fri Feb 24 10:23:14 2017');
+INSERT INTO "transactions" VALUES(28,3,'IBB',288.155,233,'Fri Feb 24 10:23:47 2017');
+INSERT INTO "transactions" VALUES(29,3,'IJH',172.9,332,'Fri Feb 24 10:23:57 2017');
+INSERT INTO "transactions" VALUES(30,3,'IVW',130.1499,167,'Fri Feb 24 10:24:08 2017');
+INSERT INTO "transactions" VALUES(31,3,'IWD',116.5,306,'Fri Feb 24 10:24:38 2017');
+INSERT INTO "transactions" VALUES(32,3,'IWM',138.5,33,'Fri Feb 24 10:24:49 2017');
+INSERT INTO "transactions" VALUES(33,3,'IWV',140.2302,301,'Fri Feb 24 10:25:17 2017');
+INSERT INTO "transactions" VALUES(34,3,'IWV',140.24,301,'Fri Feb 24 10:25:31 2017');
+INSERT INTO "transactions" VALUES(35,3,'IWV',140.24,-301,'Fri Feb 24 10:25:52 2017');
+INSERT INTO "transactions" VALUES(36,3,'NFLX',143.08,71,'Fri Feb 24 10:26:03 2017');
+INSERT INTO "transactions" VALUES(37,3,'MU',23.06,21,'Fri Feb 24 10:26:27 2017');
+INSERT INTO "transactions" VALUES(38,3,'QQQ',129.735,437,'Fri Feb 24 10:26:37 2017');
+INSERT INTO "transactions" VALUES(39,3,'STGXX',1.0,201,'Fri Feb 24 10:26:50 2017');
+INSERT INTO "transactions" VALUES(40,3,'VT',64.7,825,'Fri Feb 24 10:27:08 2017');
+INSERT INTO "transactions" VALUES(41,3,'AAPL',135.815,97,'Fri Feb 24 10:32:50 2017');
+INSERT INTO "transactions" VALUES(42,3,'BABA',102.23,48,'Fri Feb 24 10:33:25 2017');
+INSERT INTO "transactions" VALUES(43,3,'IWS',83.9605,75,'Fri Feb 24 10:34:32 2017');
+CREATE TABLE "users"
+(
+    id INTEGER PRIMARY KEY NOT NULL,
+    username TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    cash REAL DEFAULT 10000.00 NOT NULL,
+    assets DECIMAL DEFAULT 0 NOT NULL
+);
+INSERT INTO "users" VALUES(3,'brennanglynn','$5$rounds=535000$gXPhxG7x6Zp2PywH$DnzyPdI8mBSl/ABc0LHWHJauH/vgvAk.mnU9lu1Sqe4',10000.0,541075.1154);
+INSERT INTO "users" VALUES(11,'emilyrhcraft','$5$rounds=535000$6bO6bYC62scBFpIF$ov5Qm2imqfFA9KuEotxdOrz3jhfzxcltCgrWuU2VDr0',3078.28,6945.435);
+INSERT INTO "users" VALUES(13,'arnold','$5$rounds=535000$p98luokI.86kFyo9$j46.IirrUqUYvZNXqVsmdW6auKh7puSEBZK0vs/HtY4',10000.0,0);
+INSERT INTO "users" VALUES(14,'newuser','$5$rounds=535000$jUbeUwG9P9.Uxy5r$jvVqvAI8kS4X9FJHriuEn1hlLmUpEuz40KUXiyqUc74',10000.0,0);
+INSERT INTO "users" VALUES(15,'huzhong','$5$rounds=535000$T9IzpS/9.MJ4YMjM$cartBLF5g77CGq6UFewavUJ32GNLSfITw.FldExMLR1',10000.0,0);
+CREATE UNIQUE INDEX username ON "users" (username);
+COMMIT;
