@@ -12,7 +12,6 @@ def apology(top="", bottom=""):
         return s
     return render_template("apology.html", top=escape(top), bottom=escape(bottom))
 
-
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -20,6 +19,7 @@ def login_required(f):
             return redirect(url_for("login", next=request.url))
         return f(*args, **kwargs)
     return decorated_function
+
 
 def lookup(symbol):
     if symbol.startswith("^"):
@@ -29,12 +29,14 @@ def lookup(symbol):
         return None
 
     try:
-        url = "http://download.finance.yahoo.com/d/quotes.csv?f=snl1&s={}".format(symbol)
+        url = "http://download.finance.yahoo.com/d/quotes.csv?&e=.csv&f=snl1&s={}".format(symbol)
         webpage = urllib.request.urlopen(url)
         datareader = csv.reader(webpage.read().decode("utf-8").splitlines())
         row = next(datareader)
     except:
         return None
+
+    # ensure stock exists
     try:
         price = float(row[2])
     except:
@@ -47,5 +49,4 @@ def lookup(symbol):
     }
 
 def usd(value):
-    """Formats value as USD."""
     return "${:,.2f}".format(value)
