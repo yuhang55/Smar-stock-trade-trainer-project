@@ -6,11 +6,33 @@
     <meta charset="utf-8"/>
     <meta content="initial-scale=1, width=device-width" name="viewport"/>
 
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+
+
+
     <title>Stock Market: {% block title %}{% endblock %}</title>
+
+
+ <script>
+   $(document).ready(function() {  
+    $( "#Transaction_StartTime" ).datepicker();
+    $( "#Transaction_EndTime" ).datepicker();
+  });
+
+
+  </script>
+
 </head>
 
 
@@ -35,9 +57,9 @@
                 {% if session.user_id %}
 
                 <ul class="nav navbar-nav">
-                    <li><a>Quote</a></li>
-                    <li><a>Sell</a></li>
-                    <li><a>Buy</a></li>
+                    <li><a href="{{ url_for('quote') }}">Quote</a></li>
+                    <li><a href="{{ url_for('sell') }}">Sell</a></li>
+                    <li><a href="{{ url_for('buy') }}">Buy</a></li>
                     <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
                     <li><a href="{{ url_for('history') }}">History</a></li>
                 </ul>

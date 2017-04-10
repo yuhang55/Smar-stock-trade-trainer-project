@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+   <script src="http://colineberhardt.github.io/d3fc/Layout.js"></script>
+   <script src="http://colineberhardt.github.io/d3fc/d3fc.js"></script>
+   <link href="http://colineberhardt.github.io/d3fc/d3fc.css" rel="stylesheet"/>
+   <link href="{{ url_for('static', filename='styles1.css') }}" rel="stylesheet"/>
+  </head>
+<body>
+
+
+  <div id="symbol">{{symbol}}</div>
+
+  <svg id='time-series' style='height: 300px; width: 100%;'></svg>
+
+  <script type="text/javascript" >
+
+ var symbol=document.getElementById("symbol").textContent ;
+
+  //alert(symbol+".csv")
+
+  d3.csv("AAPL.csv")
+  .row(function(d) {
+    alert(d.Timestamp);
+    d.date = new Date(d.Timestamp * 1000);
+    return d;
+  })
+  .get(function(error, rows) { renderChart(rows); });
+
+function renderChart(data) {
+  var chart = fc.chart.linearTimeSeries()
+        .xDomain(fc.util.extent(data, 'date'))
+        .yDomain(fc.util.extent(data, ['open', 'close']));
+
+  var area = fc.series.area()
+        .yValue(function(d) { return d.open; });
+
+  chart.plotArea(area);
+
+  d3.select('#time-series')
+        .datum(data)
+        .call(chart);
+}
+
+</script>
+
+</body>
+</html>

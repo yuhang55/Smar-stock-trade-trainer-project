@@ -7,31 +7,15 @@
 {% block main %}
     <form action="{{ url_for('login') }}" method="post">
         <fieldset>
-
-
-        <form action="Login" method="POST">
-                <p>
-                   <label>username</label>
-                   <input class="text-input" type="text"  name="username"/>
-                </p>
-
-                <div class="clear"></div>
-                <p>
-                   <label>password</label>
-                   <input class="text-input" type="password" name="password"/>
-                </p>
-
-                <div class="clear"></div>
-                <div class="clear"></div>
-                <div class="clear"></div>
-                <p>
-                 <input class="button" type="submit" value="Log in" />
-                </p>
-        </form>
-  </div>
-
-
-
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit">Log In</button>
+            </div>
         </fieldset>
     </form>
 {% endblock %}

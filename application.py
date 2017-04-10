@@ -9,7 +9,10 @@ from tempfile import gettempdir
 
 from helpers import *
 
-app = Flask(__name__)
+
+#app = Flask(__name__, static_folder='', static_url_path='')
+
+app = Flask(__name__,static_folder='static', static_url_path='')
 
 if app.config["DEBUG"]:
     @app.after_request
@@ -81,14 +84,53 @@ def buy():
             return apology("ERROR", "INSUFFICIENT FUNDS")
         return redirect(url_for("index"))
 
-@app.route("/history")
+
+@app.route("/history",methods=["GET", "POST"])
 @login_required
 def history():
     """Show history of transactions."""
-    current_user = session["user_id"]
-    transactions = c.execute("SELECT * FROM transactions WHERE user_id = :user_id", [current_user]).fetchall()
-    return render_template("history.html", transactions=transactions, lookup=lookup, usd=usd)
-#test
+    if request.method == "GET":
+       current_user = session["user_id"]
+       transactions = c.execute("SELECT * FROM transactions WHERE user_id = :user_id", [current_user]).fetchall()
+       return render_template("history.html", transactions=transactions, lookup=lookup, usd=usd)
+    elif request.method == "POST":
+       current_user = session["user_id"]
+       Transaction_StartTime=request.form.get("Transaction_StartTime")
+       Transaction_EndTime=request.form.get("Transaction_EndTime")
+
+
+       transactions = c.execute("SELECT * FROM transactions WHERE user_id = :user_id", [current_user]).fetchall()
+       temp_transactions=[]
+       if Transaction_StartTime!="" and  Transaction_EndTime!="":
+          starttime_stamp = time.mktime(time.strptime(Transaction_StartTime,"%m/%d/%Y"))               
+          endtime_stamp = time.mktime(time.strptime(Transaction_EndTime,"%m/%d/%Y"))               
+          for transaction in transactions:
+              time_string=transaction[5]
+              time_stamp = time.mktime(time.strptime(time_string,"%a %b %d %H:%M:%S %Y"))               
+              if time_stamp>=starttime_stamp and time_stamp<=endtime_stamp:
+                 temp_transactions.append(transaction) 
+      
+       elif Transaction_StartTime!="" and  Transaction_EndTime=="":
+          starttime_stamp = time.mktime(time.strptime(Transaction_StartTime,"%m/%d/%Y"))               
+          for transaction in transactions:
+              time_string=transaction[5]
+              time_stamp = time.mktime(time.strptime(time_string,"%a %b %d %H:%M:%S %Y"))               
+              if time_stamp>=starttime_stamp:
+                 temp_transactions.append(transaction) 
+
+       elif Transaction_StartTime=="" and  Transaction_EndTime!="":
+          endtime_stamp = time.mktime(time.strptime(Transaction_EndTime,"%m/%d/%Y"))               
+          for transaction in transactions:
+              time_string=transaction[5]
+              time_stamp = time.mktime(time.strptime(time_string,"%a %b %d %H:%M:%S %Y"))               
+              if time_stamp<=endtime_stamp:
+                 temp_transactions.append(transaction) 
+       elif Transaction_StartTime=="" and  Transaction_EndTime=="":
+          for transaction in transactions:
+              temp_transactions.append(transaction) 
+       return render_template("history.html", transactions=temp_transactions, lookup=lookup, usd=usd)
+
+
 
 @app.route("/leaderboard")
 @login_required
@@ -239,5 +281,13 @@ def sell():
         return redirect(url_for("index"))
 
 
+@app.route("/plot", methods=["GET", "POST"])
+@login_required
+def plot():
+    if request.method == "GET":
+        symbol = request.args.get("symbol")
+        return render_template("plot.html",symbol=symbol)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True,port=8088)
+
