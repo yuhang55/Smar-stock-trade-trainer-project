@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+
+
+<form action="{{ url_for('history') }}" method="post">
+
+    <fieldset>
+
+        <p class="subtit"><h3>Transaction-StartTime</h3></p>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="Transaction_StartTime" id="Transaction_StartTime" placeholder="Transaction-StartTime"
+                   type="text"/>
+        </div>
+
+
+        <p class="subtit"><h3>Transaction-EndTime</h3></p>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="Transaction_EndTime"  id="Transaction_EndTime" placeholder="Transaction_EndTime"
+                   type="text"/>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    </fieldset>
+</form>
+
+
+
+<table>
+    <tr>
+        <th>Transaction Number</th>
+        <th>Symbol</th>
+        <th>Security Name</th>
+        <th>Price</th>
+        <th>Number of Shares</th>
+        <th>Transaction Date</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+        <td> <a href="{{ url_for('history') }}"> {{ transaction[0] }}</a></td>
+        <td> <a href="{{ url_for('plot') }}?symbol={{ lookup(transaction[2])["symbol"]}}"> {{ lookup(transaction[2])["symbol"] }}</a></td>
+        <td>{{ lookup(transaction[2])["name"] }}</td>
+        <td>{{ usd(transaction[3]) }}</td>
+        <td>{{ transaction[4] }}</td>
+        <td>{{ transaction[5] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -19,13 +19,23 @@ Leaderboard
         <th>
             Net Worth
         </th>
+
+        <th>
+            Add Friend
+        </th>
+
     </tr>
     {% for user in leaders %}
     <tr>
-        <td>{{ user[0] }}</td>
+
+        <td><a href="{{ url_for('history_others') }}?user_id={{ user[3] }}">{{ user[0] }}</a></td>
+
         <td>{{ usd(user[1]) }}</td>
         <td>{{ usd(user[2]) }}</td>
         <td>{{ usd(user[1] + user[2]) }}</td>
+
+        <td><a href="{{ url_for('like') }}?user_id={{ user[3] }}">{{ user[0] }}</a></td>
+
     </tr>
     {% endfor %}
 </table>
