@@ -45,6 +45,11 @@ Leaderboard
            Alarm Price
         </th>
 
+        <th>
+           Alarm
+        </th>
+
+
     </tr>
 
     {% for available in  availables %}
@@ -52,6 +57,9 @@ Leaderboard
         <td>{{ available[0] }}</td>
         <td>{{ available[1] }}</td>
         <td><a href="{{ url_for('set_price') }}?price={{ available[2] }}&symbol={{ available[0]}}">{{ available[2] }}</a></td>
+
+        <td>{{ available[3] }}</td>
+
     </tr>
 
     {% endfor %}

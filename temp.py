@@ -31,6 +31,19 @@ file = "finance.db"
 db = sqlite3.connect(file, check_same_thread=False)
 c = db.cursor()
 
+#user_id  INTEGER,symbol text,price 
+user_symbol_price_dict={}
+def get_all_info():
+    temp_dict={}
+    alarm_items= c.execute("SELECT user_id,symbol,price FROM alarm_info").fetchall()
+    for alarm_item in alarm_items:
+        user_id=alarm_item[0]
+        symbol=alarm_item[1]
+        price=alarm_item[2]
+        user_symbol_price_dict[str(user_id)+"\t"+symbol]=float(price)
+
+
+
 def history():
     temp_dict={}
     transactions = c.execute("SELECT * FROM transactions").fetchall()
@@ -56,6 +69,15 @@ def history():
         now = time.strftime("%s") 
 
 
+        ##轮训并且报警       
+        for key in user_symbol_price_dict:
+            temp_user_id=key.split("\t")[0]
+            temp_symbol=key.split("\t")[1]
+            if  symbol==temp_symbol:
+                if float(price)>user_symbol_price_dict[key]:
+                   c.execute("UPDATE alarm_info set alarm='ALARM' where user_id=? and symbol=?",(temp_user_id,temp_symbol))
+                   db.commit()
+
         if not os.path.exists("static/"+symbol+".csv"):
            f=open("static/"+symbol+".csv",'w')
            print("Timestamp,close,high,low,open,volume",file=f, flush=True)
@@ -68,4 +90,5 @@ def history():
 
 
 if __name__ == "__main__":
+   get_all_info()
    history()

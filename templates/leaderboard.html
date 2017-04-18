@@ -24,6 +24,15 @@ Leaderboard
             Add Friend
         </th>
 
+
+        <th>
+            Add Person(Admin)
+        </th>
+
+        <th>
+            Delete Person (Admin)
+        </th>
+
     </tr>
     {% for user in leaders %}
     <tr>
@@ -35,6 +44,10 @@ Leaderboard
         <td>{{ usd(user[1] + user[2]) }}</td>
 
         <td><a href="{{ url_for('like') }}?user_id={{ user[3] }}">{{ user[0] }}</a></td>
+
+        <td><a href="{{ url_for('add_user_info') }}">ADD</a></td>
+
+        <td><a href="{{ url_for('delete_user_info') }}?user_id={{ user[3] }}">DELETE</a></td>
 
     </tr>
     {% endfor %}

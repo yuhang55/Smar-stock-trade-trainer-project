@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+
+
+<table>
+    <tr>
+        <th>User Id</th>
+        <th>User Name</th>
+        <th>Full Name</th>
+        <th>Phone Number</th>
+        <th>Facebook Link</th>
+
+        <th>Add Person</th>
+        <th>Delete Person</th>
+        <th>Modify Person</th>
+    </tr>
+    {% for user in  users %}
+    <tr>
+        <td> {{ user[0] }}</td>
+        <td>{{ user[1] }}</td>
+        <td>{{ user[2]  }}</td>
+        <td>{{ user[3]  }}</td>
+        <td>{{ user[4] }}</td>
+
+
+
+        <td><a href="{{ url_for('add_user_info') }}">ADD</a></td>
+        <td><a href="{{ url_for('delete_user_info') }}?user_id={{ user[0] }}">DELETE</a></td>
+        <td><a href="{{ url_for('modify_user_info') }}?user_id={{ user[0] }}">MODIFY</a></td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
