@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Leaderboard
+{% endblock %}
+
+{% block main %}
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Symbol
+        </th>
+        <th>
+            FullName
+        </th>
+    </tr>
+    {% for symbol in  symbol_list %}
+    <tr>
+
+        <td>{{ symbol[0] }}</td>
+        <td>{{ symbol[1] }}</td>
+        <td>{{ symbol[2] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,1 +1,0 @@
-# Smar-stock-trade-trainer-project

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Leaderboard
+{% endblock %}
+
+{% block main %}
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Cash</th>
+        <th>FullName</th>
+        <th>Email</th>
+        <th>FacebookLink</th>
+    </tr>
+
+    <tr>
+        <td> {{ user_info[0] }}</td>
+        <td> {{ user_info[1] }}</td>
+        <td>{{ user_info[2] }}</td>
+        <td>{{ user_info[3] }}</td>
+        <td>{{ user_info[4] }}</td>
+    </tr>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+
+<table>
+    <tr>
+
+        <th>
+           Symbol
+        </th>
+
+        <th>
+           Number 
+        </th>
+
+        <th>
+           Alarm Price
+        </th>
+
+        <th>
+           Alarm
+        </th>
+
+
+    </tr>
+
+    {% for available in  availables %}
+    <tr>
+        <td>{{ available[0] }}</td>
+        <td>{{ available[1] }}</td>
+        <td><a href="{{ url_for('set_price') }}?price={{ available[2] }}&symbol={{ available[0]}}">{{ available[2] }}</a></td>
+
+        <td>{{ available[3] }}</td>
+
+    </tr>
+
+    {% endfor %}
+</table>
+{% endblock %}
